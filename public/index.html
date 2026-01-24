@@ -44,7 +44,7 @@
         
         <header class="header">
             <div class="header-left">
-                <div class="logo">qotd//</div>
+                <a href="#" class="logo" id="logo-link">qotd//</a>
                 <span class="date" id="current-date"></span>
             </div>
             <div class="header-buttons">
@@ -93,6 +93,7 @@
         // Store current quote data
         let currentQuote = null;
         let quoteOfTheDayData = null;
+        let quotesIndex = null;
 
         // Update current date display
         function updateDate() {
@@ -125,15 +126,48 @@
             `;
         }
         
+        // Load quote by key (filename without .json)
+        async function loadQuoteByKey(quoteKey) {
+            try {
+                const container = document.getElementById('quote-container');
+                container.innerHTML = '<div class="loading">Loading...</div>';
+                
+                if (!quotesIndex) {
+                    const indexResponse = await fetch('/data/quotes/index.json');
+                    quotesIndex = await indexResponse.json();
+                }
+                
+                // Find the quote file
+                const quoteFile = quotesIndex.items.find(f => f === `${quoteKey}.json`);
+                
+                if (!quoteFile) {
+                    throw new Error(`Quote not found: ${quoteKey}`);
+                }
+                
+                // Fetch the quote file
+                const quoteResponse = await fetch(`/data/quotes/items/${quoteFile}`);
+                const quoteData = await quoteResponse.json();
+                
+                displayQuote(quoteData);
+            } catch (error) {
+                console.error('Error loading quote:', error);
+                document.getElementById('quote-container').innerHTML = `
+                    <div class="error">Failed to load quote</div>
+                `;
+            }
+        }
+        
         // Load quote of the day (deterministic, same for everyone on the same day)
-        async function loadQuoteOfTheDay() {
+        async function loadQuoteOfTheDay(updateHash = true) {
             try {
                 const container = document.getElementById('quote-container');
                 container.innerHTML = '<div class="loading">Loading...</div>';
                 
                 // Fetch the index to get list of quotes
-                const indexResponse = await fetch('/data/quotes/index.json');
-                const index = await indexResponse.json();
+                if (!quotesIndex) {
+                    const indexResponse = await fetch('/data/quotes/index.json');
+                    quotesIndex = await indexResponse.json();
+                }
                 
                 // Calculate days since Unix epoch (Jan 1, 1970)
                 const epoch = new Date('1970-01-01');
@@ -142,8 +176,8 @@
                 const daysSinceEpoch = Math.floor((today - epoch) / (1000 * 60 * 60 * 24));
                 
                 // Select quote deterministically based on day
-                const quoteIndex = daysSinceEpoch % index.items.length;
-                const quoteFile = index.items[quoteIndex];
+                const quoteIndex = daysSinceEpoch % quotesIndex.items.length;
+                const quoteFile = quotesIndex.items[quoteIndex];
                 
                 // Fetch the quote file
                 const quoteResponse = await fetch(`/data/quotes/items/${quoteFile}`);
@@ -153,6 +187,15 @@
                 quoteOfTheDayData = quoteData;
                 
                 displayQuote(quoteData);
+                
+                // Update URL hash with quote key (filename without .json)
+                if (updateHash) {
+                    const quoteKey = quoteFile.replace('.json', '');
+                    history.replaceState(null, '', `#${quoteKey}`);
+                }
+                
+                // Hide refresh button when on QOTD
+                document.getElementById('refresh-btn').classList.add('hidden');
             } catch (error) {
                 console.error('Error loading quote:', error);
                 document.getElementById('quote-container').innerHTML = `
@@ -168,18 +211,27 @@
                 container.innerHTML = '<div class="loading">Loading...</div>';
                 
                 // Fetch the index to get list of quotes
-                const indexResponse = await fetch('/data/quotes/index.json');
-                const index = await indexResponse.json();
+                if (!quotesIndex) {
+                    const indexResponse = await fetch('/data/quotes/index.json');
+                    quotesIndex = await indexResponse.json();
+                }
                 
                 // Select random quote
-                const quoteIndex = Math.floor(Math.random() * index.items.length);
-                const quoteFile = index.items[quoteIndex];
+                const quoteIndex = Math.floor(Math.random() * quotesIndex.items.length);
+                const quoteFile = quotesIndex.items[quoteIndex];
                 
                 // Fetch the quote file
                 const quoteResponse = await fetch(`/data/quotes/items/${quoteFile}`);
                 const quoteData = await quoteResponse.json();
                 
                 displayQuote(quoteData);
+                
+                // Update URL hash with quote key (filename without .json)
+                const quoteKey = quoteFile.replace('.json', '');
+                history.pushState(null, '', `#${quoteKey}`);
+                
+                // Show the refresh button after shuffling
+                document.getElementById('refresh-btn').classList.remove('hidden');
             } catch (error) {
                 console.error('Error loading quote:', error);
                 document.getElementById('quote-container').innerHTML = `
@@ -211,25 +263,69 @@
             });
         }
 
+        // Handle hash-based navigation
+        async function handleHashChange() {
+            const hash = window.location.hash.slice(1); // Remove the # character
+            
+            if (!hash) {
+                // No hash, load quote of the day
+                loadQuoteOfTheDay(true);
+                return;
+            }
+            
+            // Load the specific quote by key
+            await loadQuoteByKey(hash);
+            
+            // Check if this is today's quote
+            if (!quotesIndex) {
+                const indexResponse = await fetch('/data/quotes/index.json');
+                quotesIndex = await indexResponse.json();
+            }
+            
+            const epoch = new Date('1970-01-01');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const daysSinceEpoch = Math.floor((today - epoch) / (1000 * 60 * 60 * 24));
+            const qotdIndex = daysSinceEpoch % quotesIndex.items.length;
+            const qotdFile = quotesIndex.items[qotdIndex].replace('.json', '');
+            
+            // Show/hide refresh button based on whether this is QOTD
+            if (hash === qotdFile) {
+                document.getElementById('refresh-btn').classList.add('hidden');
+            } else {
+                document.getElementById('refresh-btn').classList.remove('hidden');
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             updateDate();
-            loadQuoteOfTheDay();
+            
+            // Check for hash on initial load
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                handleHashChange();
+            } else {
+                loadQuoteOfTheDay(true);
+            }
+            
+            // Listen for hash changes (back/forward navigation)
+            window.addEventListener('hashchange', handleHashChange);
+            
+            // Logo click - go to quote of the day
+            document.getElementById('logo-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                loadQuoteOfTheDay(true);
+            });
             
             // Random quote button
             document.getElementById('random-btn').addEventListener('click', () => {
                 loadRandomQuote();
-                // Show the refresh button after shuffling
-                document.getElementById('refresh-btn').classList.remove('hidden');
             });
             
             // Refresh button - back to quote of the day
             document.getElementById('refresh-btn').addEventListener('click', () => {
-                if (quoteOfTheDayData) {
-                    displayQuote(quoteOfTheDayData);
-                    // Hide the refresh button when back to QOTD
-                    document.getElementById('refresh-btn').classList.add('hidden');
-                }
+                loadQuoteOfTheDay(true);
             });
             
             // Copy button
