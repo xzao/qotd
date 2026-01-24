@@ -30,9 +30,10 @@ quoteIndex = daysSinceEpoch % totalQuotes
 ```
 
 This approach ensures that:
-- The same quote appears for all users on a given day
-- Quotes cycle through the collection in a predictable order
-- No server-side processing or database is required
+
+- The same quote appears for all users on a given day.
+- Quotes cycle in a predictable order.
+- No server-side processing or database is required.
 
 ## Data
 
