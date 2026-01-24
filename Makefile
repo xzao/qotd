@@ -14,6 +14,9 @@ export $(shell sed 's/=.*//' .env)
 #
 #   target[s]
 #
+%:
+	@:
+
 build:
 	docker-compose build
 
@@ -42,6 +45,9 @@ start:
 
 stop:
 	docker-compose down
+
+upgrade:
+	docker-compose up -d --force-recreate --build
 
 version:
 	@NEW_VERSION="$(filter-out $@,$(MAKECMDGOALS))"; \
