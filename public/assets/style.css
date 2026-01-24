@@ -331,6 +331,16 @@ body {
     height: 3px;
     background: linear-gradient(90deg, var(--cyan) 0%, var(--ice-500) 50%, transparent 100%);
     box-shadow: 0 0 10px var(--cyan);
+    animation: gentleLinePulse 18s ease-in-out infinite;
+}
+
+@keyframes gentleLinePulse {
+    0%, 100% {
+        opacity: 0.92;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 /* Loading & Error States */
