@@ -12,13 +12,11 @@ Users can also request a random quote via the shuffle button.
 
 ## Demo
 
-The application is currently deployed and accessible at the following URL.
-
-**Live Site:** [https://qotd.xzao.link/](https://qotd.xzao.link/)
+The application is deployed and accessible [here](https://qotd.xzao.link/).
 
 ![Screenshot](docs/screenshots/preview-1.png)
 
-> **Note:** The live site may experience intermittent outages during maintenance or updates.
+**Note:** The site may experience intermittent outages.
 
 ## Implementation
 
