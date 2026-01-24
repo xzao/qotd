@@ -16,7 +16,7 @@ The application is deployed and accessible [here](https://qotd.xzao.link/).
 
 ![Screenshot](docs/screenshots/preview-1.png)
 
-**Note:** The site may experience intermittent outages.
+**Note:** The site uses low-cost hosting and may not always be available.
 
 ## Implementation
 
