@@ -16,7 +16,14 @@
         
         <header class="header">
             <div class="logo">qotd//</div>
-            <span class="date" id="current-date"></span>
+            <div class="header-right">
+                <span class="date" id="current-date"></span>
+                <button id="random-btn" class="random-btn" aria-label="Random quote">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                    </svg>
+                </button>
+            </div>
         </header>
         
         <main class="main">
@@ -37,6 +44,26 @@
             const today = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             dateEl.textContent = today.toLocaleDateString('en-US', options);
+        }
+        
+        // Display a quote
+        function displayQuote(quoteData) {
+            const container = document.getElementById('quote-container');
+            const authorLine = quoteData.source 
+                ? `${quoteData.author}, ${quoteData.source}`
+                : quoteData.author;
+            
+            const displayYear = quoteData.year || 'Unknown';
+            const displayTags = quoteData.tags ? quoteData.tags.join(' · ') : '';
+            
+            container.innerHTML = `
+                <div class="quote-date">${displayTags}</div>
+                <blockquote class="quote-text">"${quoteData.text}"</blockquote>
+                <div class="quote-meta">
+                    <cite class="quote-author">${authorLine}</cite>
+                    <span class="quote-tags">${displayYear}</span>
+                </div>
+            `;
         }
         
         // Load quote of the day (deterministic, same for everyone on the same day)
@@ -63,26 +90,34 @@
                 const quoteResponse = await fetch(`/data/quotes/items/${quoteFile}`);
                 const quoteData = await quoteResponse.json();
                 
-                // Format the date for display
-                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const dateString = today.toLocaleDateString('en-US', dateOptions);
-                
-                // Update the DOM
-                const authorLine = quoteData.source 
-                    ? `${quoteData.author}, ${quoteData.source}`
-                    : quoteData.author;
-                
-                const displayYear = quoteData.year || 'Unknown';
-                const displayTags = quoteData.tags ? quoteData.tags.join(' · ') : '';
-                
-                container.innerHTML = `
-                    <div class="quote-date">${displayTags}</div>
-                    <blockquote class="quote-text">"${quoteData.text}"</blockquote>
-                    <div class="quote-meta">
-                        <cite class="quote-author">${authorLine}</cite>
-                        <span class="quote-tags">${displayYear}</span>
-                    </div>
+                displayQuote(quoteData);
+            } catch (error) {
+                console.error('Error loading quote:', error);
+                document.getElementById('quote-container').innerHTML = `
+                    <div class="error">Failed to load quote</div>
                 `;
+            }
+        }
+        
+        // Load random quote
+        async function loadRandomQuote() {
+            try {
+                const container = document.getElementById('quote-container');
+                container.innerHTML = '<div class="loading">Loading...</div>';
+                
+                // Fetch the index to get list of quotes
+                const indexResponse = await fetch('/data/quotes/index.json');
+                const index = await indexResponse.json();
+                
+                // Select random quote
+                const quoteIndex = Math.floor(Math.random() * index.items.length);
+                const quoteFile = index.items[quoteIndex];
+                
+                // Fetch the quote file
+                const quoteResponse = await fetch(`/data/quotes/items/${quoteFile}`);
+                const quoteData = await quoteResponse.json();
+                
+                displayQuote(quoteData);
             } catch (error) {
                 console.error('Error loading quote:', error);
                 document.getElementById('quote-container').innerHTML = `
@@ -95,6 +130,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateDate();
             loadQuoteOfTheDay();
+            
+            // Random quote button
+            document.getElementById('random-btn').addEventListener('click', loadRandomQuote);
         });
     </script>
 </body>
