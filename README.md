@@ -12,7 +12,7 @@ Quotes are stored as individual JSON files in `/public/data/quotes/items/`. Each
 
 ## Implementation
 
-On page load, the application calculates the number of days elapsed since January 1, 2024 (the epoch date). This value is used with modulo arithmetic against the total number of available quotes to select which quote to display:
+On page load, the application calculates the number of days elapsed since the Unix epoch (January 1, 1970). This value is used with modulo arithmetic against the total number of available quotes to select which quote to display:
 
 ```
 daysSinceEpoch = floor((today - epoch) / millisecondsPerDay)
