@@ -285,7 +285,8 @@ body {
 
 .random-btn,
 .copy-btn,
-.refresh-btn {
+.refresh-btn,
+.github-btn {
     width: 40px;
     height: 40px;
     display: flex;
@@ -298,6 +299,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     opacity: 0.3;
+    text-decoration: none;
 }
 
 .refresh-btn.hidden {
@@ -311,7 +313,8 @@ body {
 
 .random-btn:hover,
 .copy-btn:hover,
-.refresh-btn:hover {
+.refresh-btn:hover,
+.github-btn:hover {
     opacity: 1;
     background: var(--ice-600);
     color: white;
@@ -328,7 +331,8 @@ body {
 }
 
 .copy-btn:active,
-.refresh-btn:active {
+.refresh-btn:active,
+.github-btn:active {
     transform: scale(0.95);
 }
 
