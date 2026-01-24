@@ -47,11 +47,19 @@
                 <div class="logo">qotd//</div>
                 <span class="date" id="current-date"></span>
             </div>
-            <button id="random-btn" class="random-btn" aria-label="Random quote">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
-                </svg>
-            </button>
+            <div class="header-buttons">
+                <button id="random-btn" class="random-btn" aria-label="Random quote">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                    </svg>
+                </button>
+                <button id="copy-btn" class="copy-btn" aria-label="Copy quote">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+            </div>
         </header>
         
         <main class="main">
@@ -65,7 +73,13 @@
         </footer>
     </div>
 
+    <!-- Copy notification -->
+    <div id="copy-notification" class="copy-notification">Copied</div>
+
     <script>
+        // Store current quote data
+        let currentQuote = null;
+
         // Update current date display
         function updateDate() {
             const dateEl = document.getElementById('current-date');
@@ -76,6 +90,9 @@
         
         // Display a quote
         function displayQuote(quoteData) {
+            // Store current quote for copying
+            currentQuote = quoteData;
+            
             const container = document.getElementById('quote-container');
             const authorLine = quoteData.source 
                 ? `${quoteData.author}, ${quoteData.source}`
@@ -154,6 +171,29 @@
             }
         }
 
+        // Copy quote to clipboard
+        function copyQuoteToClipboard() {
+            if (!currentQuote) return;
+            
+            // Format: "quote text" - Author (year)
+            const year = currentQuote.year || 'Unknown';
+            const copyText = `"${currentQuote.text}" - ${currentQuote.author} (${year})`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(copyText).then(() => {
+                // Show notification
+                const notification = document.getElementById('copy-notification');
+                notification.classList.add('show');
+                
+                // Hide notification after 2 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             updateDate();
@@ -161,6 +201,9 @@
             
             // Random quote button
             document.getElementById('random-btn').addEventListener('click', loadRandomQuote);
+            
+            // Copy button
+            document.getElementById('copy-btn').addEventListener('click', copyQuoteToClipboard);
         });
     </script>
 </body>
