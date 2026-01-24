@@ -6,7 +6,9 @@ A lightweight, static quote of the day web application that displays a determini
 
 Presents a single quote to all users on any given day.
 
-The quote selection is deterministic, meaning everyone who visits the site on the same calendar day will see the same quote. Users can also request a random quote via the shuffle button.
+The quote selection is deterministic, meaning everyone who visits the site on the same calendar day will see the same quote.
+
+Users can also request a random quote via the shuffle button.
 
 ## Demo
 
