@@ -42,3 +42,25 @@ start:
 
 stop:
 	docker-compose down
+
+version:
+	@NEW_VERSION="$(filter-out $@,$(MAKECMDGOALS))"; \
+	if [ -z "$$NEW_VERSION" ]; then \
+		echo "Usage: make version <version>"; \
+		echo "Example: make version 1.0.0.0 or make version 1.0.0.0-rc1"; \
+		exit 1; \
+	fi; \
+	if git rev-parse "v$$NEW_VERSION" >/dev/null 2>&1; then \
+		echo "Error: Version tag v$$NEW_VERSION already exists."; \
+		exit 1; \
+	fi; \
+	if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Error: Working directory is not clean. Please commit or stash your changes."; \
+		git status --short; \
+		exit 1; \
+	fi; \
+	echo "$$NEW_VERSION" > VERSION; \
+	git add VERSION; \
+	git commit -m "Version $$NEW_VERSION"; \
+	git tag "v$$NEW_VERSION"; \
+	echo "Successfully created version v$$NEW_VERSION"
