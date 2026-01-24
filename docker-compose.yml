@@ -1,0 +1,13 @@
+services:
+
+  qotd:
+    build: .
+    container_name: ${QOTD_CONTAINER_NAME:-qotd}
+    hostname: ${QOTD_HOSTNAME:-qotd}
+    image: ${QOTD_IMAGE:-qotd}:${QOTD_VERSION:-latest}
+    env_file:
+      - .env
+    ports:
+      - ${QOTD_PORT:-7800}:7800
+    restart: unless-stopped
+

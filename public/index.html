@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qotd // quote of the day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="layout">
+        <div class="background-text" aria-hidden="true">QOTD</div>
+        <div class="grid-overlay" aria-hidden="true"></div>
+        
+        <header class="header">
+            <div class="logo">qotd//</div>
+            <span class="date" id="current-date"></span>
+        </header>
+        
+        <main class="main">
+            <div id="quote-container" class="quote-display">
+                <div class="loading">Loading...</div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="accent-line"></div>
+        </footer>
+    </div>
+
+    <script>
+        // Update current date display
+        function updateDate() {
+            const dateEl = document.getElementById('current-date');
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateEl.textContent = today.toLocaleDateString('en-US', options);
+        }
+        
+        // Load quote of the day (deterministic, same for everyone on the same day)
+        async function loadQuoteOfTheDay() {
+            try {
+                const container = document.getElementById('quote-container');
+                container.innerHTML = '<div class="loading">Loading...</div>';
+                
+                // Fetch the index to get list of quotes
+                const indexResponse = await fetch('/data/quotes/index.json');
+                const index = await indexResponse.json();
+                
+                // Calculate days since epoch (Jan 1, 2024)
+                const epoch = new Date('2024-01-01');
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Normalize to start of day
+                const daysSinceEpoch = Math.floor((today - epoch) / (1000 * 60 * 60 * 24));
+                
+                // Select quote deterministically based on day
+                const quoteIndex = daysSinceEpoch % index.items.length;
+                const quoteFile = index.items[quoteIndex];
+                
+                // Fetch the quote file
+                const quoteResponse = await fetch(`/data/quotes/items/${quoteFile}`);
+                const quoteData = await quoteResponse.json();
+                
+                // Format the date for display
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateString = today.toLocaleDateString('en-US', dateOptions);
+                
+                // Update the DOM
+                const authorLine = quoteData.source 
+                    ? `${quoteData.author}, ${quoteData.source}`
+                    : quoteData.author;
+                
+                const displayYear = quoteData.year || 'Unknown';
+                const displayTags = quoteData.tags ? quoteData.tags.join(' · ') : '';
+                
+                container.innerHTML = `
+                    <div class="quote-date">${displayTags}</div>
+                    <blockquote class="quote-text">"${quoteData.text}"</blockquote>
+                    <div class="quote-meta">
+                        <cite class="quote-author">${authorLine}</cite>
+                        <span class="quote-tags">${displayYear}</span>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading quote:', error);
+                document.getElementById('quote-container').innerHTML = `
+                    <div class="error">Failed to load quote</div>
+                `;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDate();
+            loadQuoteOfTheDay();
+        });
+    </script>
+</body>
+</html>

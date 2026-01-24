@@ -1,0 +1,223 @@
+{
+  "name": "QOTD Style Guide",
+  "version": "2.0.0",
+  "inspiration": "Cool Blue + Discord aesthetic with street/urban graffiti vibe",
+  "description": "A futuristic, street-cool design system with ice blue tones, powder blues, and steel grays",
+  
+  "colors": {
+    "primary": {
+      "ice-50": "#F0F7FF",
+      "ice-100": "#E0F0FF",
+      "ice-200": "#B8DDFF",
+      "ice-300": "#8FC7FF",
+      "ice-400": "#6BB4FF",
+      "ice-500": "#4A9FFF",
+      "ice-600": "#2E8BFF",
+      "ice-700": "#1A73E8",
+      "ice-800": "#0D5BBD",
+      "ice-900": "#064294"
+    },
+    
+    "powder": {
+      "powder-50": "#F5FBFF",
+      "powder-100": "#E8F4FF",
+      "powder-200": "#D1E9FF",
+      "powder-300": "#A8D8FF",
+      "powder-400": "#7EC3F5",
+      "powder-500": "#5AADEB",
+      "powder-600": "#3D95D9",
+      "powder-700": "#2A7BBF",
+      "powder-800": "#1B62A0",
+      "powder-900": "#0F4B7F"
+    },
+    
+    "steel": {
+      "steel-50": "#F8FAFB",
+      "steel-100": "#EEF2F5",
+      "steel-200": "#D9E2E9",
+      "steel-300": "#B8C9D6",
+      "steel-400": "#95AEBF",
+      "steel-500": "#7593A8",
+      "steel-600": "#5A7A91",
+      "steel-700": "#426177",
+      "steel-800": "#2E4B5E",
+      "steel-900": "#1D3645"
+    },
+    
+    "accent": {
+      "cyan": "#00D9FF",
+      "electric": "#00BFFF",
+      "sky": "#87CEEB",
+      "mint": "#9FFFE0"
+    },
+    
+    "neutral": {
+      "black": "#0A0E14",
+      "gray-900": "#15191F",
+      "gray-800": "#1F2329",
+      "gray-700": "#2B3139",
+      "gray-600": "#3F4750",
+      "gray-500": "#5A6471",
+      "gray-400": "#7B8794",
+      "gray-300": "#A0AEBB",
+      "gray-200": "#C5D0DC",
+      "gray-100": "#E4EAF0",
+      "white": "#FFFFFF"
+    },
+    
+    "semantic": {
+      "success": "#00D9A3",
+      "warning": "#FFB84D",
+      "error": "#FF5757",
+      "info": "#4A9FFF"
+    }
+  },
+  
+  "typography": {
+    "fontFamilies": {
+      "display": "'Bebas Neue', 'Impact', 'Arial Black', sans-serif",
+      "graffiti": "'Permanent Marker', 'Brush Script MT', cursive",
+      "body": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+      "mono": "'JetBrains Mono', 'Fira Code', monospace"
+    },
+    
+    "fontSizes": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    
+    "fontWeights": {
+      "light": 300,
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    
+    "lineHeights": {
+      "tight": 1.25,
+      "normal": 1.5,
+      "relaxed": 1.75,
+      "loose": 2
+    }
+  },
+  
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem",
+    "4xl": "6rem"
+  },
+  
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.125rem",
+    "base": "0.25rem",
+    "md": "0.375rem",
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "2xl": "1rem",
+    "full": "9999px"
+  },
+  
+  "shadows": {
+    "sm": "0 1px 2px 0 rgba(62, 39, 35, 0.05)",
+    "base": "0 1px 3px 0 rgba(62, 39, 35, 0.1), 0 1px 2px 0 rgba(62, 39, 35, 0.06)",
+    "md": "0 4px 6px -1px rgba(62, 39, 35, 0.1), 0 2px 4px -1px rgba(62, 39, 35, 0.06)",
+    "lg": "0 10px 15px -3px rgba(62, 39, 35, 0.1), 0 4px 6px -2px rgba(62, 39, 35, 0.05)",
+    "xl": "0 20px 25px -5px rgba(62, 39, 35, 0.1), 0 10px 10px -5px rgba(62, 39, 35, 0.04)"
+  },
+  
+  "components": {
+    "button": {
+      "primary": {
+        "background": "ice-600",
+        "color": "white",
+        "hover": "ice-700",
+        "active": "ice-800"
+      },
+      "secondary": {
+        "background": "powder-400",
+        "color": "gray-900",
+        "hover": "powder-500",
+        "active": "powder-600"
+      },
+      "ghost": {
+        "background": "transparent",
+        "color": "ice-600",
+        "hover": "powder-100",
+        "active": "powder-200"
+      }
+    },
+    
+    "card": {
+      "background": "steel-50",
+      "border": "ice-300",
+      "shadow": "xl",
+      "padding": "lg"
+    },
+    
+    "input": {
+      "background": "steel-50",
+      "border": "ice-400",
+      "focus": "ice-600",
+      "placeholder": "steel-500"
+    },
+    
+    "quote": {
+      "text": "white",
+      "author": "ice-300",
+      "background": "gray-800",
+      "accent": "cyan"
+    }
+  },
+  
+  "theme": {
+    "dark": {
+      "background": "gray-900",
+      "surface": "gray-800",
+      "surfaceAlt": "gray-700",
+      "primary": "ice-500",
+      "secondary": "powder-400",
+      "text": "white",
+      "textSecondary": "ice-200",
+      "textTertiary": "steel-300",
+      "border": "gray-700",
+      "divider": "gray-800",
+      "accent": "cyan"
+    },
+    
+    "light": {
+      "background": "ice-50",
+      "surface": "white",
+      "surfaceAlt": "powder-50",
+      "primary": "ice-600",
+      "secondary": "powder-500",
+      "text": "gray-900",
+      "textSecondary": "steel-700",
+      "textTertiary": "steel-500",
+      "border": "ice-200",
+      "divider": "ice-100",
+      "accent": "electric"
+    }
+  },
+  
+  "principles": {
+    "bold": "Use striking blues and high contrast for impact",
+    "urban": "Street-inspired with graffiti aesthetic and modern edge",
+    "cool": "Ice cold color palette that feels fresh and futuristic",
+    "legible": "Despite graffiti inspiration, maintain readability",
+    "energetic": "Dynamic, youthful, and contemporary"
+  }
+}

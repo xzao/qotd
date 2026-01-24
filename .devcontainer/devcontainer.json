@@ -1,0 +1,26 @@
+{
+	"name": "QOTD",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"features": {
+	},
+	"forwardPorts": [7800],
+	"portsAttributes": {
+		"7800": {
+			"label": "QOTD",
+			"onAutoForward": "openBrowser"
+		}
+	},
+	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y nginx && sudo rm -f /etc/nginx/sites-enabled/default && sudo rm -rf /usr/share/nginx/html && sudo ln -sfn /workspaces/qotd/public /usr/share/nginx/html && sudo ln -sf /workspaces/qotd/etc/qotd/nginx.conf /etc/nginx/sites-enabled/qotd.conf",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"esbenp.prettier-vscode"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "esbenp.prettier-vscode"
+			}
+		}
+	},
+	"remoteUser": "vscode"
+}

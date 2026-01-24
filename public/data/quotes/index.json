@@ -1,0 +1,12 @@
+{
+  "type": "quotes",
+  "version": "1.0",
+  "items": [
+    "chatgpt-unsolicited-education.json",
+    "einstein-difficulty-opportunity.json",
+    "aristotle-knowing-yourself.json",
+    "sun-tzu-victory-no-battle.json",
+    "sun-tzu-chaos-opportunity.json",
+    "sun-tzu-golden-bridge.json"
+  ]
+}

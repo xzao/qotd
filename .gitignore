@@ -1,0 +1,11 @@
+# env
+.env
+
+# src
+src/webroot/jquery.js
+
+# volumes
+volumes
+
+# vs
+.vscode
