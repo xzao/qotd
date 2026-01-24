@@ -1,0 +1,15 @@
+/* TEAM */
+    Developer: Your Name Here
+    Site: qotd.example.com
+    Location: Worldwide
+
+/* THANKS */
+    Philosophers, strategists, and thinkers throughout history
+
+/* SITE */
+    Last update: 2026/01/25
+    Language: English
+    Doctype: HTML5
+    IDE: Cursor
+    Stack: HTML5, CSS3, Vanilla JavaScript
+    Fonts: Bebas Neue, Inter, Permanent Marker (Google Fonts)

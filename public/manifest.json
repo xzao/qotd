@@ -1,0 +1,25 @@
+{
+  "name": "qotd - Quote of The Day",
+  "short_name": "qotd",
+  "description": "Daily inspirational quotes from history's greatest minds",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#15191F",
+  "theme_color": "#15191F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["lifestyle", "education"],
+  "screenshots": []
+}
