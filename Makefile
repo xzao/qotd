@@ -53,6 +53,7 @@ stop:
 	docker-compose down
 
 upgrade:
+	git pull origin $$(git branch --show-current)
 	docker-compose up -d --force-recreate --build
 
 version:
