@@ -159,6 +159,8 @@ body {
     text-decoration: none;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
 }
 
 .logo:hover {
@@ -313,6 +315,8 @@ body {
     transition: all 0.3s ease;
     opacity: 0.3;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
 }
 
 .refresh-btn.hidden {
