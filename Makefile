@@ -43,6 +43,12 @@ shell:
 start:
 	docker-compose up -d
 
+stats:
+	@echo
+	@echo "QOTD Statistic[s]:"
+	@echo "- Total Quote[s]: $$(ls -1 public/data/quotes/items/*.json 2>/dev/null | wc -l)"
+	@echo
+
 stop:
 	docker-compose down
 
