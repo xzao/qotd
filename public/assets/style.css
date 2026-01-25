@@ -419,8 +419,21 @@ body {
         opacity: 0.3;
     }
     
+    .quote-date {
+        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    }
+    
     .quote-text {
+        font-size: clamp(2rem, 5vw, 4rem);
         line-height: 1.4;
+    }
+    
+    .quote-author {
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    }
+    
+    .quote-tags {
+        font-size: clamp(0.75rem, 1.2vw, 0.85rem);
     }
     
     .quote-meta {
@@ -430,8 +443,20 @@ body {
 }
 
 @media (max-width: 480px) {
+    .quote-date {
+        font-size: clamp(0.65rem, 1vw, 0.75rem);
+    }
+    
     .quote-text {
-        font-size: clamp(1.5rem, 8vw, 2.5rem);
+        font-size: clamp(1.5rem, 7vw, 2.5rem);
+    }
+    
+    .quote-author {
+        font-size: clamp(1rem, 2vw, 1.4rem);
+    }
+    
+    .quote-tags {
+        font-size: clamp(0.7rem, 1vw, 0.8rem);
     }
 }
 
