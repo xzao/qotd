@@ -263,6 +263,41 @@
             });
         }
 
+        // Pull-to-refresh functionality for mobile
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let isPulling = false;
+        
+        function handleTouchStart(e) {
+            if (window.scrollY === 0) {
+                touchStartY = e.touches[0].clientY;
+            }
+        }
+        
+        function handleTouchMove(e) {
+            if (touchStartY === 0) return;
+            
+            touchEndY = e.touches[0].clientY;
+            const pullDistance = touchEndY - touchStartY;
+            
+            if (pullDistance > 80 && window.scrollY === 0 && !isPulling) {
+                isPulling = true;
+            }
+        }
+        
+        function handleTouchEnd() {
+            if (isPulling) {
+                isPulling = false;
+                // Trigger shuffle and animate button
+                const shuffleBtn = document.getElementById('random-btn');
+                shuffleBtn.classList.add('active');
+                setTimeout(() => shuffleBtn.classList.remove('active'), 300);
+                loadRandomQuote();
+            }
+            touchStartY = 0;
+            touchEndY = 0;
+        }
+
         // Handle hash-based navigation
         async function handleHashChange() {
             const hash = window.location.hash.slice(1); // Remove the # character
@@ -316,6 +351,8 @@
             document.getElementById('logo-link').addEventListener('click', (e) => {
                 e.preventDefault();
                 loadQuoteOfTheDay(true);
+                // Hide refresh button when going to QOTD
+                document.getElementById('refresh-btn').classList.add('hidden');
             });
             
             // Random quote button
@@ -326,10 +363,17 @@
             // Refresh button - back to quote of the day
             document.getElementById('refresh-btn').addEventListener('click', () => {
                 loadQuoteOfTheDay(true);
+                // Hide refresh button when back to QOTD
+                document.getElementById('refresh-btn').classList.add('hidden');
             });
             
             // Copy button
             document.getElementById('copy-btn').addEventListener('click', copyQuoteToClipboard);
+            
+            // Pull-to-refresh for mobile devices
+            document.addEventListener('touchstart', handleTouchStart, { passive: true });
+            document.addEventListener('touchmove', handleTouchMove, { passive: true });
+            document.addEventListener('touchend', handleTouchEnd, { passive: true });
         });
     </script>
 </body>

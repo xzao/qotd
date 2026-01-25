@@ -24,6 +24,7 @@ body {
     background: var(--gray-900);
     color: white;
     min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
     overflow-x: hidden;
     position: relative;
 }
@@ -101,12 +102,16 @@ body {
 /* Layout */
 .layout {
     min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    height: 100vh;
+    height: 100dvh;
     display: grid;
     grid-template-rows: auto 1fr auto;
     padding: clamp(2rem, 5vw, 4rem);
     gap: 3rem;
     position: relative;
     z-index: 1;
+    overflow-y: auto;
 }
 
 /* Background Text */
@@ -178,6 +183,7 @@ body {
     width: 100%;
     position: relative;
     z-index: 10;
+    overflow-y: auto;
 }
 
 .quote-display {
@@ -333,7 +339,8 @@ body {
     transform: rotate(90deg);
 }
 
-.random-btn:active {
+.random-btn:active,
+.random-btn.active {
     transform: rotate(90deg) scale(0.95);
 }
 
@@ -398,7 +405,9 @@ body {
 @media (max-width: 768px) {
     .layout {
         padding: 1.5rem;
-        gap: 2rem;
+        gap: 1.5rem;
+        height: 100vh;
+        height: 100dvh;
     }
     
     .header {
