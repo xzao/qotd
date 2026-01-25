@@ -12,7 +12,7 @@ Users can also request a random quote via the shuffle button.
 
 ## Demo
 
-The application is deployed and accessible [here](https://qotd.xzao.link/).
+The site is deployed and accessible at [qotd.xzao.link](https://qotd.xzao.link/).
 
 ![Screenshot](docs/screenshots/preview-1.png)
 
