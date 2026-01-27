@@ -2,6 +2,8 @@
 
 A lightweight, static quote of the day web application that displays a deterministic daily quote from a curated collection.
 
+![Screenshot](docs/screenshots/preview-1.png)
+
 ## Overview
 
 Presents a single quote to all users on any given day.
@@ -12,11 +14,9 @@ Users can also request a random quote via the shuffle button.
 
 ## Demo
 
-The site is deployed and accessible at [qotd.xzao.link](https://qotd.xzao.link/).
+The application is deployed at [qotd.xzao.link](https://qotd.xzao.link/).
 
-![Screenshot](docs/screenshots/preview-1.png)
-
-**Note:** The site uses low-cost hosting and may not always be available.
+**Note** The hosting server runs on low-cost infrastructure and may not always be online. Intermittent downtime should be expected.
 
 ## Implementation
 
