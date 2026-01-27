@@ -44,10 +44,11 @@ start:
 	docker-compose up -d
 
 stats:
+	@echo "\033[1;36m═════════════════════\033[0m"
 	@echo
-	@echo "QOTD Statistic[s]:"
-	@echo "- Total Quote[s]: $$(ls -1 public/data/quotes/items/*.json 2>/dev/null | wc -l)"
+	@echo "  \033[1;33mTotal Quotes:\033[0m \033[1;32m$$(ls -1 public/data/quotes/items/*.json 2>/dev/null | wc -l)\033[0m"
 	@echo
+	@echo "\033[1;36m═════════════════════\033[0m"
 
 stop:
 	docker-compose down
